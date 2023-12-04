@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "_*&5c@1153xw6=489*2*=&*%=4)8f^m54kb@3ca-cb(wm%b@wm"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["tour-espacial-relecloud.azurewebsites.net", "127.0.0.1"]
 
@@ -82,7 +86,9 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "django_db",
         "USER": "mrvodka",
-        "PASSWORD": "1234_asdf",  # La dejo como texto aunque es menos seguro para el ejemplo
+        "PASSWORD": os.environ.get(
+            "DATABASE_PASSWORD"
+        ),  # Obtener la contraseña de la variable de entorno
         "HOST": "tour-relecloud-db.postgres.database.azure.com",
         "PORT": "5432",
         "OPTIONS": {"sslmode": "require"},
