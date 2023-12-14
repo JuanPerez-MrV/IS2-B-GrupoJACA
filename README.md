@@ -25,6 +25,9 @@ Bienvenido a Relecloud, donde la exploración espacial se encuentra con la tecno
 4. **Interacción Mejorada con Formulario "Info_request":**
    - Optimiza tu comunicación con nosotros. Recibe notificaciones por correo electrónico al enviar solicitudes a través del formulario "Info_request".
 
+5. **Nueva Dimensión de Experiencia:**
+   - Explora una dimensión adicional de lujo y tecnología en tus viajes interespaciales gracias a las últimas innovaciones implementadas en Relecloud.
+
 Únete a Relecloud para vivir una nueva dimensión de lujo y tecnología en tus viajes interespaciales. ¡Tu aventura cósmica te espera!
 
 
@@ -43,7 +46,7 @@ source venv/bin/activate
 ```
 o bien
 ```
-ven/Scripts/activate
+venv\Scripts\activate
 ```
 Una vez activado, se debe ejecutar el siguiente comando para iniciar el servidor local:
 ```
@@ -68,4 +71,4 @@ Este proyecto está bajo la licencia [MIT](https://choosealicense.com/licenses/m
 
 Puede utilizar este proyecto con fines comerciales, distribuirlo a otros, realizar modificaciones según sus necesidades y usarlo de forma privada. Tenga en cuenta que el software se proporciona "tal cual", sin garantías de ningún tipo. Los autores del proyecto no asumimos responsabilidad por cualquier reclamación, daño o cualquier otra responsabilidad que pueda surgir del uso del software.
 
-Si decide contribuir a este proyecto, tenga en cuenta que tus contribuciones también estarán sujetas a la Licencia MIT. Agradecemos cualquier contribución y esperamos que encuentre útil este software. ¡Bienvenido a bordo!
+Si decide contribuir a este proyecto, tenga en cuenta que sus contribuciones también estarán sujetas a la Licencia MIT. Agradecemos cualquier contribución y esperamos que encuentre útil este software. ¡Bienvenido a bordo!

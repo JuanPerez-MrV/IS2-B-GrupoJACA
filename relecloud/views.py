@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from . import models
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
+from .forms import OpinionForm
 
 
 # Create your views here.
@@ -17,6 +18,26 @@ def about(request):
 def destinations(request):
     all_destinations = models.Destination.objects.all()
     return render(request, "destinations.html", {"destinations": all_destinations})
+
+
+def opinions(request, cruise_id):
+    cruise = get_object_or_404(models.Cruise, pk=cruise_id)
+    opinions = models.Opinion.objects.filter(cruise=cruise)
+
+    if request.method == "POST":
+        form = OpinionForm(request.POST)
+        if form.is_valid():
+            form.instance.cruise = cruise
+            form.save()
+            return redirect("opinions", cruise_id=cruise_id)
+    else:
+        form = OpinionForm()
+
+    return render(
+        request,
+        "opinions.html",
+        {"cruise": cruise, "opinions": opinions, "form": form},
+    )
 
 
 class DestinationDetailView(generic.DetailView):
