@@ -9,7 +9,12 @@
   <p>If you can imagine it, we travel to it! Below is our list of confirmed destinations.</p>
   <ul class="list-group">
     {% for destination in destinations %}
-      <a class="list-group-item list-group-item-action" href="{% url 'destination_detail' destination.id %}">{{ destination }}</a>
+      <a class="list-group-item list-group-item-action" href="{% url 'destination_detail' destination.id %}">
+        {{ destination }}
+        {% if destination.image %}
+          <img src="{{ destination.image.url }}" alt="{{ destination.name }}" style="max-width: 100px; max-height: 100px;" />
+        {% endif %}
+      </a>
     {% endfor %}
   </ul>
 {% endblock %}
