@@ -7,6 +7,9 @@
 {% block content %}
   <h1>{{ destination }}</h1>
   <p>{{ destination.description }}</p>
+  {% if destination.image %}
+    <img src="{{ destination.image.url }}" alt="{{ destination.name }}" style="max-width: 200px; max-height: 200px;" />
+  {% endif %}
   <p>You can explore {{ destination }} on the following cruises:</p>
   <ul class="list-group">
     {% for cruise in destination.cruises.all %}
