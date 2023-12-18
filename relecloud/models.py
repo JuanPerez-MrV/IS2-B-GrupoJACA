@@ -61,7 +61,7 @@ class Opinion(models.Model):
     rating = models.IntegerField(
         null=False,
         blank=False,
-        validators=[models.Min(1), models.Max(5)],  # Rango de valores para el rating
+        validators=[models.Min(0), models.Max(5)],  # Rango de valores para el rating
     )
     cruise = models.ForeignKey(Cruise, on_delete=models.PROTECT)
 
