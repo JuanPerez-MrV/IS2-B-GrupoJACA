@@ -9,6 +9,9 @@ class Destination(models.Model):
         blank=False,
     )
     description = models.TextField(max_length=2000, null=False, blank=False)
+    image = models.ImageField(
+        upload_to="destination_images/", null=True, blank=True
+    )  # Campo de imagen
 
     def __str__(self):
         return self.name
@@ -58,5 +61,9 @@ class Opinion(models.Model):
     rating = models.IntegerField(
         null=False,
         blank=False,
+        validators=[models.Min(0), models.Max(5)],  # Rango de valores para el rating
     )
     cruise = models.ForeignKey(Cruise, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.name} - {self.cruise.name}"
