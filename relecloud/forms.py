@@ -1,9 +1,16 @@
+# forms.py
 from django import forms
+from .models import Opinion, Destination
 from crispy_forms.helper import FormHelper
-from .models import Opinion
 
 
 class OpinionForm(forms.ModelForm):
     class Meta:
         model = Opinion
-        fields = ["name", "comment", "rating"]
+        fields = ["comment", "rating"]
+
+
+class DestinationForm(forms.ModelForm):
+    class Meta:
+        model = Destination
+        fields = ["name", "description", "photo"]
