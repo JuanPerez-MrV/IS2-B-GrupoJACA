@@ -1,0 +1,7 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "git.ignoreLimitWarning": true,
+    "appService.defaultWebAppToDeploy": "/subscriptions/69f91a75-b0dd-4230-a4a7-fb27d815f7e6/resourceGroups/grupo1/providers/Microsoft.Web/sites/spacetour-relecloud",
+    "appService.deploySubpath": "."
+}
