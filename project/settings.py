@@ -8,7 +8,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+# See https://docs.djangoproject.com/es/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -16,7 +16,21 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["spacetour-relecloud.azurewebsites.net", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "spacetour-relecloud.azurewebsites.net",
+    ".azurewebsites.net",
+    "127.0.0.1",
+]
+
+# Configuración de orígenes confiables para CSRF
+CSRF_TRUSTED_ORIGINS = [
+    "https://spacetour-relecloud.azurewebsites.net",
+    "http://spacetour-relecloud.azurewebsites.net",
+    "https://.azurewebsites.net",
+    "http://.azurewebsites.net",
+    "http://127.0.0.1",
+    "https://127.0.0.1",
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -40,7 +54,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
 ]
 
 ROOT_URLCONF = "project.urls"
@@ -72,23 +85,23 @@ WSGI_APPLICATION = "project.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-        "HOST": "127.0.0.1",
-        # "ENGINE": "django.db.backends.postgresql",
-        # "NAME": "django_db",
-        # "USER": "administrador1",
-        # "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        # "HOST": "relecloud.postgres.database.azure.com",
-        # "PORT": "5432",
-        # "OPTIONS": {"sslmode": "require"},  # SSL es para Azure
+        # "ENGINE": "django.db.backends.sqlite3",
+        # "NAME": BASE_DIR / "db.sqlite3",
+        # "HOST": "127.0.0.1",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "django_db",
+        "USER": "administrador1",
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "HOST": "relecloud.postgres.database.azure.com",
+        "PORT": "5432",
+        "OPTIONS": {"sslmode": "require"},  # SSL es para Azure
     }
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/es/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -106,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
+# https://docs.djangoproject.com/es/5.0/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
 
@@ -120,13 +133,16 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
+# https://docs.djangoproject.com/es/5.0/howto/static-files/
 
 # Archivos estáticos (que no cambian: CSS, JavaScript, imágenes)
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 # Agrega la ruta completa de tus imágenes al final de STATICFILES_DIRS
-STATICFILES_DIRS = [BASE_DIR / "relecloud" / "static", BASE_DIR / "relecloud" / "static" / "res" / "img" / "cruceros"]
+STATICFILES_DIRS = [
+    BASE_DIR / "relecloud" / "static",
+    BASE_DIR / "relecloud" / "static" / "res" / "img" / "cruceros",
+]
 
 # Whitenoise
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

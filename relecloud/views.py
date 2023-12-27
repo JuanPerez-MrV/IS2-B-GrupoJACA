@@ -1,5 +1,6 @@
 import os
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import FileResponse
 from django.shortcuts import render, get_object_or_404
@@ -42,19 +43,27 @@ def serve_image(request, destination_id):
 
 
 # Vista para mostrar las opiniones de un crucero
+@csrf_exempt
 def opinions(request, cruise_id):
-    cruise = get_object_or_404(Cruise, pk=cruise_id)  # Obtiene el crucero
+    cruise = get_object_or_404(Cruise, pk=cruise_id)
     opinions = Opinion.objects.filter(cruise=cruise)
 
-    if request.method == "POST":  # Si el usuario envía el formulario
+    if request.method == "POST":
         form = OpinionForm(request.POST)
-        if form.is_valid():  # Comprueba que pase las validaciones
+        if form.is_valid():
             opinion = form.save(commit=False)
-            opinion.cruise = cruise  # Asígnale el crucero actual
-            opinion.user = request.user  # Asígnale el usuario actual
-            opinion.save()  # Guarda la opinión en la base de datos
+            opinion.cruise = cruise
+
+            if request.user.is_authenticated:
+                opinion.user = request.user
+            else:
+                # Si el usuario no está autenticado, asigna un usuario "Anónimo"
+                opinion.user_id = 3
+
+            opinion.save()
+
     else:
-        form = OpinionForm()  # Crea un formulario en blanco
+        form = OpinionForm()
 
     return render(
         request, "opinions.html", {"cruise": cruise, "opinions": opinions, "form": form}
