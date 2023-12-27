@@ -5,27 +5,33 @@
 {% endblock %}
 
 {% block content %}
-  <h1>{{ cruise.name }} - Opiniones</h1>
+  <div class="container mt-4">
+    <h1>{{ cruise.name }} - Opiniones</h1>
 
-  <div class="container">
-    <h2 class="mt-4">Opiniones de clientes</h2>
-    <ul class="list-unstyled">
-      {% for opinion in opinions %}
-        <li class="border p-3 mb-3">
-          <p class="font-weight-bold">{{ opinion.name }}</p>
-          <p>{{ opinion.comment }}</p>
-          <p>Rating: {{ opinion.rating }}</p>
-        </li>
-        {% empty %}
-        <p>No hay opiniones disponibles para este crucero.</p>
-      {% endfor %}
-    </ul>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Opiniones de clientes</h2>
+        <ul class="list-unstyled">
+          {% for opinion in opinions %}
+            <li class="border p-3 mb-3">
+              <p class="font-weight-bold">{{ opinion.user.username }}</p>
+              <p>{{ opinion.comment }}</p>
+              <p>Rating: {{ opinion.rating }}</p>
+            </li>
+            {% empty %}
+            <p>No hay opiniones disponibles para este crucero.</p>
+          {% endfor %}
+        </ul>
+      </div>
 
-    <h2 class="mt-4">Deja tu opinión</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary mt-3">Enviar opinión</button>
-    </form>
+      <div class="col-md-6">
+        <h2>Deja tu opinión</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary mt-3">Enviar opinión</button>
+        </form>
+      </div>
+    </div>
   </div>
 {% endblock %}

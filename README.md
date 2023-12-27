@@ -1,5 +1,5 @@
 # IS2-B-GrupoJACA
-Repositorio del grupo JACA de la asignatura de Ingeniería del software 2 de 2023-24. Puedes acceder al resultado final del proyecto en [este enlace](tour-espacial-relecloud.azurewebsites.net).
+Repositorio del grupo JACA de la asignatura de Ingeniería del software 2 de 2023-24. Puedes acceder al resultado final del proyecto en [este enlace](https://spacetour-relecloud.azurewebsites.net/).
 
 ## Integrantes del grupo
 - [Javier Aguilar](https://github.com/J-AguilarG).
@@ -40,13 +40,17 @@ pip install -r requirements.txt
 
 
 ## Ejecución y despliegue local
-Si está usando venv, debe activarlo mediante el siguiente comando:
+Si quiere usar venv, debe tener instalado python previamente y a posteriori podra instalar venv con el comando:
+```
+python -m venv .venv
+```
+Y activarlo mediante el siguiente comando:
 ```
 source venv/bin/activate
 ```
 o bien
 ```
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 Una vez activado, se debe ejecutar el siguiente comando para iniciar el servidor local:
 ```

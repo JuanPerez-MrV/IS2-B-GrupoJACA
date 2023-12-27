@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Destination(models.Model):
@@ -9,9 +10,7 @@ class Destination(models.Model):
         blank=False,
     )
     description = models.TextField(max_length=2000, null=False, blank=False)
-    image = models.ImageField(
-        upload_to="destination_images/", null=True, blank=True
-    )  # Campo de imagen
+    photo = models.ImageField(upload_to="res/img/cruceros/", null=False, blank=False)
 
     def __str__(self):
         return self.name
@@ -25,7 +24,7 @@ class Cruise(models.Model):
         blank=False,
     )
     description = models.TextField(max_length=2000, null=False, blank=False)
-    destinations = models.ManyToManyField(Destination, related_name="cruises")
+    destinations = models.ManyToManyField("Destination", related_name="cruises")
 
     def __str__(self):
         return self.name
@@ -48,11 +47,7 @@ class InfoRequest(models.Model):
 
 
 class Opinion(models.Model):
-    name = models.CharField(
-        max_length=50,
-        null=False,
-        blank=False,
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField(
         max_length=2000,
         null=False,
@@ -61,9 +56,10 @@ class Opinion(models.Model):
     rating = models.IntegerField(
         null=False,
         blank=False,
-        validators=[models.Min(0), models.Max(5)],  # Rango de valores para el rating
     )
-    cruise = models.ForeignKey(Cruise, on_delete=models.PROTECT)
+    cruise = models.ForeignKey(
+        Cruise, on_delete=models.CASCADE, related_name="opinions"
+    )
 
     def __str__(self):
-        return f"{self.name} - {self.cruise.name}"
+        return f"{self.user.username} - {self.cruise.name}"

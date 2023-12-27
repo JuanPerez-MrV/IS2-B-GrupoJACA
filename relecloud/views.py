@@ -1,43 +1,64 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
-from . import models
-from django.views import generic
+import os
+from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import FileResponse
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
+from django.views import generic
 from .forms import OpinionForm
+from .models import Cruise, Destination, Opinion
+from relecloud import models
 
 
-# Create your views here.
+# Vista para mostrar la página principal
 def index(request):
     return render(request, "index.html")
 
 
+# Vista para mostrar la página "about"
 def about(request):
     return render(request, "about.html")
 
 
+# Vista para mostrar los destinos
 def destinations(request):
     all_destinations = models.Destination.objects.all()
     return render(request, "destinations.html", {"destinations": all_destinations})
 
 
-def opinions(request, cruise_id):
-    cruise = get_object_or_404(models.Cruise, pk=cruise_id)
-    opinions = models.Opinion.objects.filter(cruise=cruise)
+# Vista para servir imágenes
+def serve_image(request, destination_id):
+    destination = get_object_or_404(Destination, pk=destination_id)
+    image_path = os.path.join(
+        settings.BASE_DIR,
+        "relecloud",
+        "static",
+        "res",
+        "img",
+        "cruceros",
+        f"{destination.name}.jpg",
+    )
+    return FileResponse(open(image_path, "rb"), content_type="image/jpg")
 
-    if request.method == "POST":
+
+# Vista para mostrar las opiniones de un crucero
+def opinions(request, cruise_id):
+    cruise = get_object_or_404(Cruise, pk=cruise_id)  # Obtiene el crucero
+    opinions = Opinion.objects.filter(cruise=cruise)
+
+    if request.method == "POST":  # Si el usuario envía el formulario
         form = OpinionForm(request.POST)
-        if form.is_valid():
-            form.instance.cruise = cruise
-            form.save()
-            return redirect("opinions", cruise_id=cruise_id)
+        if form.is_valid():  # Comprueba que pase las validaciones
+            opinion = form.save(commit=False)
+            opinion.cruise = cruise  # Asígnale el crucero actual
+            opinion.user = request.user  # Asígnale el usuario actual
+            opinion.save()  # Guarda la opinión en la base de datos
     else:
-        form = OpinionForm()
+        form = OpinionForm()  # Crea un formulario en blanco
 
     return render(
-        request,
-        "opinions.html",
-        {"cruise": cruise, "opinions": opinions, "form": form},
-    )
+        request, "opinions.html", {"cruise": cruise, "opinions": opinions, "form": form}
+    )  # Renderiza la plantilla
 
 
 class DestinationDetailView(generic.DetailView):
