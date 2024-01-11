@@ -1,8 +1,8 @@
 python-dotenv
-crispy-bootstrap4
 django
 django-crispy-forms
 django-js-lib-bootstrap5
+crispy-bootstrap4
 psycopg2-binary
 whitenoise
 pillow
