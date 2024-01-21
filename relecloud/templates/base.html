@@ -26,11 +26,11 @@
             <a class="nav-link" href="{% url 'destinations' %}">Destinations</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'about' %}">About</a>
+            <!-- Nueva opción para las opiniones -->
+            <a class="nav-link" href="{% url 'opinions' %}">Opinions</a>
           </li>
           <li class="nav-item">
-            <!-- Nueva opción para las opiniones -->
-            {% comment %} <a class="nav-link" href="{% url 'opinions' cruise_id=cruise.id %}">Opinions</a> {% endcomment %}
+            <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
         </ul>
       </div>
@@ -60,10 +60,18 @@
 
       <div class="container">
         <div class="row">
-          <div class="col-md-4">
-            <img class="mr-3 img-fluid" src="{% static 'res/img/astronaut.jpeg' %}" alt="Astronaut looking into space" />
-          </div>
-          <div class="col-md-8">
+          {% if request.resolver_match.url_name != 'opinions' %}
+            <div class="col-md-4">
+              {% if destination_photo %}
+                <!-- Mostrar la imagen del destino actual -->
+                <img class="mr-3 img-fluid" src="{{ destination_photo }}" alt="" />
+              {% else %}
+                <!-- Mostrar una imagen por defecto -->
+                <img class="mr-3 img-fluid" src="{% static 'res/img/astronaut.jpeg' %}" alt="Astronaut looking into space" />
+              {% endif %}
+            </div>
+          {% endif %}
+          <div class="col">
             {% block content %}
               <h1 class="display-4 tk-elevon">Lorem Ipsum Dolor</h1>
               <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>

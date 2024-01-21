@@ -9,6 +9,12 @@ class OpinionForm(forms.ModelForm):
         model = Opinion
         fields = ["comment", "rating"]
 
+    def clean_rating(self):
+        rating = self.cleaned_data["rating"]
+        if rating < 1 or rating > 5:
+            raise forms.ValidationError("La calificación debe estar entre 1 y 5")
+        return rating
+
 
 class DestinationForm(forms.ModelForm):
     class Meta:

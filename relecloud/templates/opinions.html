@@ -1,37 +1,55 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  {{ cruise.name }} - Opiniones
+  Opiniones
 {% endblock %}
 
 {% block content %}
   <div class="container mt-4">
-    <h1>{{ cruise.name }} - Opiniones</h1>
+    <h1>Opiniones</h1>
 
     <div class="row">
-      <div class="col-md-6">
-        <h2>Opiniones de clientes</h2>
-        <ul class="list-unstyled">
-          {% for opinion in opinions %}
-            <li class="border p-3 mb-3">
-              <p class="font-weight-bold">{{ opinion.user.username }}</p>
-              <p>{{ opinion.comment }}</p>
-              <p>Rating: {{ opinion.rating }}</p>
-            </li>
-            {% empty %}
-            <p>No hay opiniones disponibles para este crucero.</p>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <div class="col-md-6">
+      <div class="col-md-12">
         <h2>Deja tu opinión</h2>
         <form method="post">
           {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit" class="btn btn-primary mt-3">Enviar opinión</button>
+          <div class="row">
+            <div class="col-md-6 mb-3">{{ form.comment.label_tag }}
+              {{ form.comment }}</div>
+            <div class="col-md-6 mb-3">
+              {{ form.rating.label_tag }}
+              {{ form.rating }}
+              {% for error in form.rating.errors %}
+                <small class="text-danger">{{ error }}</small>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary mt-3">Enviar opinión</button>
+            </div>
+          </div>
         </form>
       </div>
+    </div>
+
+    <div class="row mt-4">
+      <h2>Opiniones de clientes</h2>
+      {% for opinion in opinions %}
+        <div class="col-md-4">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ opinion.user.username }}</h5>
+              <p class="card-text">{{ opinion.comment }}</p>
+              <p class="card-text">
+                <small class="text-muted">Rating: {{ opinion.rating }}</small>
+              </p>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>No hay opiniones disponibles.</p>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}

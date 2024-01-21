@@ -13,7 +13,4 @@
       <a class="list-group-item list-group-item-action" href="{% url 'cruise_detail' cruise.id %}">{{ cruise }}</a>
     {% endfor %}
   </ul>
-  {% if destination.photo %}
-    <img src="{% url 'destination_photo' destination.id %}" alt="{{ destination.name }} Photo" class="img-thumbnail" />
-  {% endif %}
 {% endblock %}
