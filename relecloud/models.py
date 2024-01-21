@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Destination(models.Model):
@@ -56,10 +57,8 @@ class Opinion(models.Model):
     rating = models.IntegerField(
         null=False,
         blank=False,
-    )
-    cruise = models.ForeignKey(
-        Cruise, on_delete=models.CASCADE, related_name="opinions"
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
     )
 
     def __str__(self):
-        return f"{self.user.username} - {self.cruise.name}"
+        return f"{self.user.username} - Rating: {self.rating}"
