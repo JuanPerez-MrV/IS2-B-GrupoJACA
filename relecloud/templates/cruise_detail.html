@@ -16,19 +16,34 @@
 
   <!-- Opiniones -->
   <hr />
-  <p>Opiniones de "{{ cruise }}":</p>
-  <ul class="list-group">
-    {% for review in cruise.opinions.all %}
-      <li class="list-group-item">
-        <p>{{ review.comment }}</p>
-        <p>{{ review.rating }}</p>
-        <p>{{ review.user }}</p>
-      </li>
-      {% empty %}
-      <p>No hay opiniones disponibles para este crucero.</p>
-    {% endfor %}
-  </ul>
+  <button id="toggleOpinions" class="btn btn-primary mt-3">Mostrar Opiniones</button>
+  <div id="opinions" style="display: none;">
+    <p>Opiniones de "{{ cruise }}":</p>
+    <ul class="list-group">
+      {% for review in cruise.opinions.all %}
+        <li class="list-group-item">
+          <p>{{ review.comment }}</p>
+          <p>{{ review.rating }}</p>
+          <p>{{ review.user }}</p>
+        </li>
+        {% empty %}
+        <p>No hay opiniones disponibles para este crucero.</p>
+      {% endfor %}
+    </ul>
 
-  <!-- Enlace para recoger opiniones -->
-  <a href="{% url 'opinions' cruise.id %}" class="btn btn-primary mt-3">Deja tu opinión</a>
+    <!-- Enlace para recoger opiniones -->
+    <a href="{% url 'opinions' cruise.id %}" class="btn btn-primary mt-3">Deja tu opinión</a>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script> 
+    $(document).ready(function () {
+      $("#toggleOpinions").click(function () {
+        $("#opinions").toggle();
+        $(this).text(function (i, text) {
+          return text === "Mostrar Opiniones" ? "Ocultar Opiniones" : "Mostrar Opiniones";
+        });
+      });
+    });
+  </script> <!-- Más facil que hacer un script en el base.html -->
 {% endblock %}

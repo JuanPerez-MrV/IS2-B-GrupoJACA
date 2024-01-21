@@ -28,9 +28,10 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
-          {% comment %} <li class="nav-item">
-            <a class="nav-link" href="#">Login</a>
-          </li> {% endcomment %}
+          <li class="nav-item">
+            <!-- Nueva opción para las opiniones -->
+            {% comment %} <a class="nav-link" href="{% url 'opinions' cruise_id=cruise.id %}">Opinions</a> {% endcomment %}
+          </li>
         </ul>
       </div>
     </nav>

@@ -1,14 +1,16 @@
 import os
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.messages.views import SuccessMessageMixin
 from django.http import FileResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import generic
 from .forms import OpinionForm
 from .models import Cruise, Destination, Opinion
 from relecloud import models
+from django.core.mail import send_mail
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views import generic
+from . import models
 
 
 # Vista para mostrar la página principal
@@ -81,10 +83,33 @@ class CruiseDetailView(generic.DetailView):
     model = models.Cruise
     context_object_name = "cruise"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cruise'] = self.get_object()
+        return context
+
 
 class InfoRequestCreate(SuccessMessageMixin, generic.CreateView):
     template_name = "info_request_create.html"
     model = models.InfoRequest
     fields = ["name", "email", "cruise", "notes"]
     success_url = reverse_lazy("index")
-    success_message = "Thank you, %(name)s! We will email you when we have more information about %(cruise)s!"
+    success_message = "Gracias, %(name)s! Te enviaremos más información sobre %(cruise)s!"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        # Envía un correo electrónico usando send_mail de Django
+        subject = 'Solicitud de Información'
+        message = f'Hola {form.cleaned_data["name"]}, gracias por tu solicitud. Te enviaremos más información sobre {form.cleaned_data["cruise"]}.'
+        from_email = 'relecloudd@gmail.com'  # Reemplaza con tu dirección de correo electrónico
+        recipient_list = [form.cleaned_data["email"]]
+
+        send_mail(
+            subject,
+            message,
+            from_email,
+            recipient_list,
+        )
+
+        return response
