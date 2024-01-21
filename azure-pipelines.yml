@@ -1,7 +1,0 @@
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure for Students(69f91a75-b0dd-4230-a4a7-fb27d815f7e6)'
-    appType: 'webApp'
-    WebAppName: 'relecloud'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
