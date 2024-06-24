@@ -1,17 +1,12 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title %}
+ReleCloud - Solicitud de información {% endblock %} {% block content %}
+<h1>Solicitud de información</h1>
+<h2>
+  Rellena el siguiente formulario para solicitar información sobre el servicio
+</h2>
 
-{% block title %}
-  ReleCloud - Solicitud de información
-{% endblock %}
-
-{% block content %}
-  <h1>Solicitud de información</h1>
-  <h2>Rellena el siguiente formulario para solicitar información sobre el servicio</h2>
-
-  <form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-primary">Save</button>
-  </form>
+<form method="post">
+  {% csrf_token %} {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
 {% endblock %}
