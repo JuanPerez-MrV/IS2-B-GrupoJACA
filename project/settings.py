@@ -157,9 +157,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 # Configuración de correo electrónico
-EMAIL_HOST = 'smtp.gmail.com'  # Aquí va la dirección del servidor SMTP
-EMAIL_PORT = 587  # También puede ser 465, 25, 587
-EMAIL_USE_TLS = True  # Muchos servidores SMTP requieren TLS
-# EMAIL_USE_SSL = True  # Muchos servidores SMTP requieren SSL
-EMAIL_HOST_USER = 'relecloudd@gmail.com'  # Tu dirección de correo electrónico
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")  # Tu contraseña de correo electrónico
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Temporal envio a backend
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465  # Puede ser 465, 25 o 587.
+# EMAIL_USE_TLS = True  # Muchos servidores SMTP requieren TLS.
+EMAIL_USE_SSL = True  # Muchos servidores SMTP requieren SSL.
+EMAIL_HOST_USER = 'relecloudd@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
